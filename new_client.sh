@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=1090
 current_dir=${PWD}
 new_client () {
   # Generates the custom client.ovpn
