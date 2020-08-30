@@ -4,6 +4,7 @@
 #
 # Copyright (c) 2013 Nyr. Released under the MIT License.
 
+current_dir=${PWD}
 
 # Detect Debian users running the script with "sh" instead of bash
 if readlink /proc/$$/exe | grep -q "dash"; then
@@ -95,7 +96,7 @@ new_client () {
   echo "<tls-crypt>"
   sed -ne '/BEGIN OpenVPN Static key/,$ p' /etc/openvpn/server/tc.key
   echo "</tls-crypt>"
-  } > ~/"$client".ovpn
+  } > "${current_dir}/${client}.ovpn"
 }
 
 if [[ ! -e /etc/openvpn/server/server.conf ]]; then
@@ -420,7 +421,7 @@ verb 3" > /etc/openvpn/server/client-common.txt
   echo
   echo "Finished!"
   echo
-  echo "The client configuration is available in:" ~/"$client.ovpn"
+  echo "The client configuration is available in: ${current_dir}/${client}.ovpn"
   echo "New clients can be added by running this script again."
 else
   clear
