@@ -443,7 +443,15 @@ else
       read -r -p "Name: " unsanitized_client
       client="${unsanitized_client/[^0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-]/_}"
       while [[ -z "$client" || -e /etc/openvpn/server/easy-rsa/pki/issued/"$client".crt ]]; do
-        echo "$client: invalid name."
+        if [[ -z "$client" ]]
+        then
+          echo "$client: Name is empty."
+        fi
+        if [[ -e /etc/openvpn/server/easy-rsa/pki/issued/"$client".crt ]]
+        then
+          echo "$client: client already exists."
+        fi
+
         read -r -p "Name: " unsanitized_client
         client="${unsanitized_client/[^0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-]/_}"
       done
